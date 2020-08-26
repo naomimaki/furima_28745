@@ -25,41 +25,54 @@ Things you may want to cover:
 
 # users テーブル
 
-| Column         | Type    | Options     |
-| -------------- | ------- | ----------- |
-| nickname       | string  | null: false |
-| email          | string  | null: false |
-| password       | string  | null: false |
-| family_name    | string  | null: false |
-| sei            | string  | null: false |
-| mei            | string  | null: false |
-| year_of_birth  | integer | null: false |
-| birth_month    | integer | null: false |
-| birthday       | integer | null: false |
+| Column           | Type    | Options     |
+| ---------------- | ------- | ----------- |
+| nickname         | string  | null: false |
+| email            | string  | null: false |
+| password         | string  | null: false |
+| family_name      | string  | null: false |
+| first_name       | string  | null: false |
+| family_name_kana | string  | null: false |
+| first_name_kana  | string  | null: false |
+| birth_date       | date    | null: false |
 
 ### Association
 
-- has_many :items
-- has_many :addressees
+- has_many :items 
+- has_many :purchases
 
 
 ## items テーブル
 
-| Column               | Type    | Options     |
-| -------------------- | ------- | ----------- |
-| image                | string  | null: false |
-| name                 | string  | null: false |
-| explanation          | string  | null: false |
-| category             | string  | null: false |
-| delivery_fee         | string  | null: false |
-| ship_prefecture      | string  | null: false |
-| days_until_shipping  | integer | null: false |
-| price                | integer | null: false |
+| Column                     | Type     | Options     |
+| -------------------------- | -------- | ----------- |
+| image                      | string   | null: false |
+| name                       | string   | null: false |
+| explanation                | string   | null: false |
+| genre_category             | integer  | null: false |
+| genre_delivery_fee         | integer  | null: false |
+| genre_ship_prefecture      | integer  | null: false |
+| genre_days_until_shipping  | integer  | null: false |
+| price                      | integer  | null: false |
 
 ### Association
 
 - belongs_to :user
-- has_one :addressees
+- has_one :purchase
+
+## purchase テーブル
+
+| Column        | Type    | Options     |
+| ------------- | ------- | ----------- |
+| user_id       | integer | null: false |
+| item_id       | integer | null: false |
+| addressee_id  | integer | null: false |
+
+### Association
+
+- belongs_to user
+- belongs_to item
+- belongs_to addressee
 
 
 ## addressees テーブル
@@ -72,10 +85,6 @@ Things you may want to cover:
 | address           | string  | null: false |
 | building_name     | string  |             |
 | phone_number      | string  | null: false |
-| card_number       | integer | null: false |
-| expiration_year   | integer | null: false |
-| expiration_month  | integer | null: false |
-| cvv               | integer | null: false |
 
 ### Association
 
