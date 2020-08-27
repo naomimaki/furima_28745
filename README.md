@@ -44,17 +44,19 @@ Things you may want to cover:
 
 ## items テーブル
 
-| Column                     | Type     | Options     |
-| -------------------------- | -------- | ----------- |
-| image                      | string   | null: false |
-| name                       | string   | null: false |
-| explanation                | string   | null: false |
-| category_id                | integer  | null: false |
-| status_id                  | integer  | null: false |
-| delivery_fee_id            | integer  | null: false |
-| ship_prefecture_id         | integer  | null: false |
-| days_until_shipping_id     | integer  | null: false |
-| price                      | integer  | null: false |
+| Column                     | Type     | Options                       |
+| -------------------------- | -------- | ----------------------------- |
+| image                      | string   | null: false                   |
+| name                       | string   | null: false                   |
+| explanation                | string   | null: false                   |
+| category_id                | integer  | null: false                   |
+| status_id                  | integer  | null: false                   |
+| delivery_fee_id            | integer  | null: false                   |
+| ship_prefecture_id         | integer  | null: false                   |
+| days_until_shipping_id     | integer  | null: false                   |
+| price                      | integer  | null: false                   |
+| user_id                    | integer  | null: false ,foreign_key: true|
+
 
 ### Association
 
@@ -88,4 +90,4 @@ Things you may want to cover:
 
 ### Association
 
-- belongs_to :item
+- belongs_to :purchase
