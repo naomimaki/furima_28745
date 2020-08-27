@@ -65,11 +65,12 @@ Things you may want to cover:
 
 | Column        | Type    | Options                       |
 | ------------- | ------- | ----------------------------- |
-| addressee_id  | integer | null: false ,foreign_key: true|
+| user_id       | integer | null: false ,foreign_key: true|
+| item_id       | integer | null: false ,foreign_key: true|
 
 ### Association
 
-- belongs_to addressee
+- has_one :addressee
 
 
 ## addressees テーブル
@@ -84,8 +85,10 @@ Things you may want to cover:
 | phone_number      | string  | null: false                   |
 | user_id           | integer | null: false ,foreign_key: true|
 | item_id           | integer | null: false ,foreign_key: true|
+| purchase_id       | integer | null: false ,foreign_key: true|
 
 ### Association
 
 - belongs_to :item
 - belongs_to :user
+- belongs_to :purchase
