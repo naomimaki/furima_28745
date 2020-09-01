@@ -9,9 +9,7 @@ RSpec.describe User, type: :model do
     it "すべての入力項目に情報が存在する" do
       expect(@user).to be_valid
     end
-    
-    # - メールアドレスが一意性であること
-    # "emailが重複していないと登録できる"
+  
     it "emailが重複していると登録できない" do
       @user.save
       another_user = FactoryBot.build(:user, email: @user.email)
@@ -19,7 +17,6 @@ RSpec.describe User, type: :model do
       expect(another_user.errors.full_messages).to include("Email has already been taken")
     end
     
-    # - メールアドレスは@を含む必要があること
     it "emailの中に@が含まれる" do
       expect(@user.email).to include("@")
     end
@@ -29,7 +26,6 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("Email is invalid")
     end
     
-    # - パスワードは6文字以上であること
     it "passwordが6文字以上であれば登録できる" do
       @user.password = "aaa000"
       @user.password_confirmation = "aaa000"
@@ -42,7 +38,6 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)" )
     end
     
-    # - パスワードは半角英数字混合であること
     it "passwordが半角英数字混合であれば登録できる" do
       @user.password = "aaa000"
       @user.password_confirmation = "aaa000"
@@ -60,7 +55,7 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("Password Password Include both letters and numbers" )
     end
-    # - ユーザー本名は全角（漢字・ひらがな・カタカナ）で入力させること
+
     it "last_nameが全角であれば登録できる" do
       @user.last_name = "あ"
       expect(@user).to be_valid
@@ -81,8 +76,6 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include("First name Full-width characters")
     end
 
-
-    # - ユーザー本名のフリガナは全角（カタカナ）で入力させること
     it "last_name_kanaがカタカナであれば登録できる" do
       @user.last_name_kana = "ア"
       expect(@user).to be_valid
@@ -102,6 +95,5 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include("First name kana Full-width katakana characters")
     end
-  
   end
 end
