@@ -1,0 +1,107 @@
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
+  before do
+    @user =FactoryBot.build(:user)
+  end
+  
+  describe 'ユーザー新規登録' do
+    it "すべての入力項目に情報が存在する" do
+      expect(@user).to be_valid
+    end
+    
+    # - メールアドレスが一意性であること
+    # "emailが重複していないと登録できる"
+    it "emailが重複していると登録できない" do
+      @user.save
+      another_user = FactoryBot.build(:user, email: @user.email)
+      another_user.valid?
+      expect(another_user.errors.full_messages).to include("Email has already been taken")
+    end
+    
+    # - メールアドレスは@を含む必要があること
+    it "emailの中に@が含まれる" do
+      expect(@user.email).to include("@")
+    end
+    it "＠がなければ登録できない" do
+        @user.email = "aaaaa"
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Email is invalid")
+    end
+    
+    # - パスワードは6文字以上であること
+    it "passwordが6文字以上であれば登録できる" do
+      @user.password = "aaa000"
+      @user.password_confirmation = "aaa000"
+      expect(@user).to be_valid
+    end
+    it "passwordが5文字だと登録できない" do
+      @user.password = "aa000"
+      @user.password_confirmation = "aa000"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password is too short (minimum is 6 characters)" )
+    end
+    
+    # - パスワードは半角英数字混合であること
+    it "passwordが半角英数字混合であれば登録できる" do
+      @user.password = "aaa000"
+      @user.password_confirmation = "aaa000"
+      expect(@user).to be_valid
+    end
+    it "passwordが半角数字のみあれば登録できない" do
+    @user.password = "000000"
+      @user.password_confirmation = "000000"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password Password Include both letters and numbers" )
+    end
+    it "passwordが半角英字のみあれば登録できない" do
+      @user.password = "aaaaaa"
+      @user.password_confirmation = "aaaaaa"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Password Password Include both letters and numbers" )
+    end
+    # - ユーザー本名は全角（漢字・ひらがな・カタカナ）で入力させること
+    it "last_nameが全角であれば登録できる" do
+      @user.last_name = "あ"
+      expect(@user).to be_valid
+    end
+    it "last_nameが半角であれば登録できない" do
+      @user.last_name = "a"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last name Full-width characters")
+    end
+
+    it "first_nameが全角であれば登録できる" do
+      @user.first_name = "あ"
+      expect(@user).to be_valid
+    end
+    it "first_nameが半角であれば登録できない" do
+      @user.first_name = "a"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name Full-width characters")
+    end
+
+
+    # - ユーザー本名のフリガナは全角（カタカナ）で入力させること
+    it "last_name_kanaがカタカナであれば登録できる" do
+      @user.last_name_kana = "ア"
+      expect(@user).to be_valid
+    end
+    it "last_name_kanaがひらがなであれば登録できない" do
+      @user.last_name_kana = "あ"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last name kana Full-width katakana characters")
+    end
+    
+    it "first_name_kanaがカタカナであれば登録できる" do
+      @user.first_name_kana = "ア"
+      expect(@user).to be_valid
+    end
+    it "first_name_kanaがひらがなであれば登録できない" do
+      @user.first_name_kana = "あ"
+      @user.valid?
+      expect(@user.errors.full_messages).to include("First name kana Full-width katakana characters")
+    end
+  
+  end
+end
