@@ -48,12 +48,12 @@ Things you may want to cover:
 | -------------------------- | -------- | ----------------------------- |
 | image                      | string   | null: false                   |
 | name                       | string   | null: false                   |
-| explanation                | string   | null: false                   |
+| info                       | text     | null: false                   |
 | category_id                | integer  | null: false                   |
-| status_id                  | integer  | null: false                   |
-| delivery_fee_id            | integer  | null: false                   |
-| ship_prefecture_id         | integer  | null: false                   |
-| days_until_shipping_id     | integer  | null: false                   |
+| sales_status_id            | integer  | null: false                   |
+| shipping_fee_status_id     | integer  | null: false                   |
+| prefecture_id              | integer  | null: false                   |
+| schedule_delivery_id       | integer  | null: false                   |
 | price                      | integer  | null: false                   |
 | user_id                    | integer  | null: false ,foreign_key: true|
 
