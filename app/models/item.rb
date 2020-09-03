@@ -4,21 +4,21 @@ class Item < ApplicationRecord
   belongs_to_active_hash :sales_status
   belongs_to_active_hash :shipping_fee_status
   belongs_to_active_hash :prefecture
-  belongs_to_active_hash :schedule_derivery
+  belongs_to_active_hash :schedule_delivery
   
-  belongs_to:user
+  belongs_to :user
   
-  validates :image, :name, :info, :category, :sales_status_id, :shipping_fee_status_id, :prefecture_id, :schedule_delivery_id, :price, :user_id, presence :true
-  validates :info, length {maximum: 1000 }
-  validates :name,length {maximum: 40 }
+  # validates :image, :name, :info, :category, :sales_status_id, :shipping_fee_status_id, :prefecture_id, :schedule_delivery_id, :price, :user_id, presence: true
+  # validates :info, length: { maximum :1000 }
+  # validates  :name, length: { maximum :40 }
 
-  with options format: {with: greater_than_or_equal_to: 300 && less_than_or_equal_to: 9999999 message:"Price Out of setting range"} do
-    validates :price
-  end
+  # with options format: {with: greater_than_or_equal_to: 300 && less_than_or_equal_to: 9999999, message:"Price Out of setting range"} do
+  #   validates :price
+  # end
 
-  with options format: {with: /\A[0-9]+\z/ message:"Price Half-width number"} do
-    validates :price
-  end
+  # with options format: {with: /\A[0-9]+\z/, message:"Price Half-width number"} do
+  #   validates :price
+  # end
 
   # アクティブハッシュのバリデーション
   validates :category_id, numericality: { other_than: 1}
