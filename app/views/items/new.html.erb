@@ -8,7 +8,7 @@
     <%= form_with model: @item, url: "/items", local: true do |f| %>
     <%# model: @item, url: "/items", method::post後で↑に記述しようPOST   /items(.:format)items#create。%>
     <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
-    <%# <%= render 'shared/error_messages', model: f.object %> %>
+    <%= render 'shared/error_messages', model: f.object %>
     <%# //インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
 
     <%# 出品画像 %>
