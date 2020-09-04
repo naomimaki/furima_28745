@@ -2,7 +2,12 @@ class Item < ApplicationRecord
   validates :image, :name, :info, :price, :user_id, presence: true
   validates  :name, length: { maximum:40 }
   validates :info, length: { maximum:1000 }
-  validates :price, numericality: {greater_than_or_equal_to:300, less_than_or_equal_to:999999 }
+  with_options numericality: {with:/\A[a-zA-Z0-9]+\z/, message: 'Half-width number'} do
+    validates :price
+  end
+  with_options inclusion: { in:300..999999, message:"Out of setting range"} do
+      validates :price
+  end
   # アクティブハッシュ用のもろもろ
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
@@ -13,22 +18,11 @@ class Item < ApplicationRecord
 
   belongs_to :user
   # アクティブハッシュのバリデーション
-  validates :category_id, numericality: { other_than: 1}
-  validates :sales_status_id, numericality: { other_than: 1}
-  validates :prefecture_id, numericality: { other_than: 0}
-  validates :schedule_delivery_id, numericality: { other_than: 1}
-  validates :shipping_fee_status_id, numericality: { other_than: 1}
-      #  バリデーションの設定エラーMSGは
-      # Image can't be blank
-      # Name can't be blank
-      # Info can't be blank
-      # Price can't be blank
-      # Price Half-width number
-      # Price Out of setting range
-      # Category Select
-      # Sales status Select
-      # Shipping fee status Select
-      # Prefecture Select
-      # Scheduled delivery Select
-      # , message:"Price Out of setting range"
+  with_options numericality: { other_than: 0,message:"Select"} do
+    validates :category_id
+    validates :sales_status_id
+    validates :prefecture_id
+    validates :schedule_delivery_id
+    validates :shipping_fee_status_id
+  end
 end
