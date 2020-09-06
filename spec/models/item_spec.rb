@@ -30,5 +30,17 @@ RSpec.describe Item, type: :model do
       @item.valid?
       expect(@item.errors.full_messages).to include("Price Half-width number")
     end
+
+    it "imageが空だと登録できない" do
+      @item.image = ""
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Image can't be blank")
+    end
+
+    it "category_idが0だと登録できない" do
+      @item.category_id = "0"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Category Select")
+    end
   end
 end
