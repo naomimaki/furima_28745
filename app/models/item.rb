@@ -6,7 +6,7 @@ class Item < ApplicationRecord
     validates :price
   end
   with_options inclusion: { in:300..999999, message:"Out of setting range"} do
-      validates :price
+    validates :price
   end
   # アクティブハッシュ用のもろもろ
   extend ActiveHash::Associations::ActiveRecordExtensions
