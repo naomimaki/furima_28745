@@ -18,15 +18,6 @@ class ItemsController < ApplicationController
     end
   end
 
-  def checked
-    item = Item.find(params[:id])
-    if item.checked
-      item.update(checked: false)
-    else
-      item.update(checked: true)
-    end
-  end
-
   private
   def item_params
     params.require(:item).permit(:image, :name, :info, :category_id, :sales_status_id, :shipping_fee_status_id, :prefecture_id, :schedule_delivery_id, :price, :user_id).merge(user_id: current_user.id)
