@@ -1,4 +1,6 @@
 class Item < ApplicationRecord
+  has_one_attached :image
+
   validates :image, :name, :info, :price, presence: true
   validates  :name, length: { maximum:40 }
   validates :info, length: { maximum:1000 }
@@ -8,7 +10,7 @@ class Item < ApplicationRecord
   with_options inclusion: { in:300..9999999, message:"Out of setting range"} do
     validates :price
   end
-  # アクティブハッシュ用のもろもろ
+  # アクティブハッシュ用
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
   belongs_to_active_hash :sales_status
