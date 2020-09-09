@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates  :nickname, :last_name, :first_name, :last_name_kana, :first_name_kana, :birth_date, presence: true
-  validates  :password, length: { minimum:6 }
+  validates  :password, length: { minimum: 6 }
 
   with_options format: {with: /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i, message: 'Password Include both letters and numbers'} do
     validates :password
