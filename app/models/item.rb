@@ -5,7 +5,7 @@ class Item < ApplicationRecord
   validates :image, :name, :info, :price, presence: true
   validates :name, length: { maximum: 40 }
   validates :info, length: { maximum: 1000 }
-  with_options numericality: {with: /\A[a-zA-Z0-9]+\z/, message: 'Half-width number'} do
+  with_options numericality: { with: /\A[a-zA-Z0-9]+\z/, message: 'Half-width number'} do
     validates :price
   end
   with_options inclusion: { in: 300..9_999_999, message: 'Out of setting range'} do
