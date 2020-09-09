@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :move_to_index, except: [:index, :show]
+  before_acrion :set_item, only [:show, :edit]
 
   def index
     @items = Item.includes(:user).order('created_at DESC')
@@ -20,11 +21,9 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
   end
 
   def update
@@ -46,4 +45,9 @@ class ItemsController < ApplicationController
   def move_to_index
     redirect_to user_session_path unless user_signed_in?
   end
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
 end
