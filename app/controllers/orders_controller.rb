@@ -1,15 +1,15 @@
 class OrdersController < ApplicationController
   before_action :move_to_index, only: [:new]
+  before_action :set_item, only: [:new, :create]
 
   def new
-    @item = Item.find(params[:item_id])
     @order = OrderPurchase.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order = OrderPurchase.new(order_params)
     if @order.valid?
+       pay_item
        @order.save
       redirect_to root_path
     else
@@ -18,9 +18,13 @@ class OrdersController < ApplicationController
   end
  
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
   def move_to_index 
     @item = Item.find(params[:item_id])
-    # if !user_signed_in? || @item.purchase != nil
     unless user_signed_in? && @item.purchase == nil
       redirect_to root_path
     end
@@ -33,9 +37,10 @@ class OrdersController < ApplicationController
   end
 
   def pay_item
-    Payjp.api_key = ["PAYJP_SECRET_KEY"]  # PAY.JPテスト秘密鍵
+    @item = Item.find(params[:item_id])
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]  # PAY.JPテスト秘密鍵
     Payjp::Charge.create(
-      amount: item_params[:price],  # 商品の値段
+      amount: @item.price,  # 商品の値段
       card: order_params[:token],    # カードトークン
       currency:'jpy'                 # 通貨の種類(日本円)
     )
