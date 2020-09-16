@@ -4,7 +4,7 @@ class OrderPurchase
   attr_accessor :postal_code, :prefecture_id, :city, :addresses, :building_name, :phone_number, :user_id, :item_id, :purchase_id, :token
 
   # orderテーブルのバリデーション
-  validates :token, :postal_code, :city, :addresses, :phone_number, presence: true
+  validates :token, :postal_code, :city, :addresses, :phone_number, :prefecture_id, presence: true
 
   validates :postal_code, format: { with: /\A\d{3}[-]\d{4}\z/, message: 'Input correctly' }
   validates :phone_number, length: {maximum: 11} 

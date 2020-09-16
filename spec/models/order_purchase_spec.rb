@@ -10,9 +10,6 @@ RSpec.describe OrderPurchase, type: :model do
       expect(@order_purchase).to be_valid
     end
 
-    it "郵便番号が３桁−４桁の形式になっている場合は保存できる" do
-      expect(@order_purchase).to be_valid
-    end
 
     it "郵便番号にハイフンが入っていないと保存できない" do
       @order_purchase.postal_code = '1111111'
@@ -42,11 +39,6 @@ RSpec.describe OrderPurchase, type: :model do
       expect(@order_purchase.errors.full_messages).to include("Addresses can't be blank")
     end
 
-    it "building_nameが空の場合は保存できる" do
-      @order_purchase.building_name = nil
-      expect(@order_purchase).to be_valid
-    end
-
     it "phone_numberが半角数字11桁であれば保存できる" do
       expect(@order_purchase).to be_valid
     end
@@ -57,9 +49,6 @@ RSpec.describe OrderPurchase, type: :model do
       expect(@order_purchase.errors.full_messages).to include("Phone number can't be blank")
     end
 
-    it "tokenが生成されている場合は保存できる" do
-      expect(@order_purchase).to be_valid
-    end
 
     it "tokenが生成されていない場合は保存できない" do
       @order_purchase.token = nil
