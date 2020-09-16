@@ -73,10 +73,10 @@ Things you may want to cover:
 ### Association
 - belongs_to :user
 - belongs_to :item
-- has_one :addressee
+- has_one :order
 
 
-## addressees テーブル
+## order テーブル
 
 | Column            | Type    | Options                       |
 | ----------------- | ------- | ------------------------------|

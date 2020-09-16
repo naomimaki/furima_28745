@@ -1,6 +1,8 @@
 class Item < ApplicationRecord
   has_one_attached :image
   belongs_to :user
+  has_one :purchase
+
 
   validates :image, :name, :info, :price, presence: true
   validates :name, length: { maximum: 40 }
@@ -11,7 +13,7 @@ class Item < ApplicationRecord
   with_options inclusion: { in: 300..9_999_999, message: 'Out of setting range'} do
     validates :price
   end
-  # アクティブハッシュ用
+ 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
   belongs_to_active_hash :sales_status
@@ -20,7 +22,7 @@ class Item < ApplicationRecord
   belongs_to_active_hash :schedule_delivery
 
   belongs_to :user
-  # アクティブハッシュのバリデーション
+
   with_options numericality: { other_than: 0, message: 'Select'} do
     validates :category_id
     validates :sales_status_id
