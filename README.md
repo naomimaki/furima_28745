@@ -73,7 +73,7 @@ Things you may want to cover:
 ### Association
 - belongs_to :user
 - belongs_to :item
-- has_one :orders
+- has_one :order
 
 
 ## order テーブル
@@ -85,7 +85,7 @@ Things you may want to cover:
 | city              | string  | null: false                   |
 | address           | string  | null: false                   |
 | building_name     | string  |                               |
-| phone_number      | integer | null: false                   |
+| phone_number      | string  | null: false                   |
 | purchase_id       | integer | null: false ,foreign_key: true|
 
 ### Association
