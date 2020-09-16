@@ -11,12 +11,23 @@ RSpec.describe OrderPurchase, type: :model do
       it "ordersテーブルのすべてのカラムに情報があると保存ができる" do
         expect(@order_purchase).to be_valid
       end
+
+      it "building_nameが空の場合は保存できる" do
+        @order_purchase.building_name = nil
+        expect(@order_purchase).to be_valid
+      end
     end
 
     context "ordersテーブル似情報が保存できない時" do
 
       it "郵便番号にハイフンが入っていないと保存できない" do
         @order_purchase.postal_code = '1111111'
+        @order_purchase.valid?
+        expect(@order_purchase.errors.full_messages).to include('Postal code Input correctly')
+      end
+
+      it "郵便番号が３桁−４桁の配置以外になっていると保存できない" do
+        @order_purchase.postal_code = '1-111111'
         @order_purchase.valid?
         expect(@order_purchase.errors.full_messages).to include('Postal code Input correctly')
       end
@@ -46,6 +57,13 @@ RSpec.describe OrderPurchase, type: :model do
         @order_purchase.valid?
         expect(@order_purchase.errors.full_messages).to include("Phone number can't be blank")
       end
+
+      it "phone_numberが11桁以上の場合は保存できない" do
+        @order_purchase.phone_number = "111111111111"
+        @order_purchase.valid?
+        expect(@order_purchase.errors.full_messages).to include("Phone number is too long (maximum is 11 characters)")
+      end
+
 
       it "tokenが生成されていない場合は保存できない" do
         @order_purchase.token = nil
